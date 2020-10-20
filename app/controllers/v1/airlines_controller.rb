@@ -1,4 +1,6 @@
 class V1::AirlinesController < ApplicationController
+  before_action :set_airline, only: %i[show update]
+
   def index
     @airlines = Airline.all
     render json: @airlines, status: :ok
@@ -7,14 +9,23 @@ class V1::AirlinesController < ApplicationController
   def create
     @airline = Airline.new(airline_params)
 
-    @airline.save
-    render json: @airline, status: :created
+    if @airline.save
+      render json: @airline, status: :created
+    else
+      render json: @airline.errors, status: :unprocessable_entity
+    end
   end
 
   def show
-    @airline = Airline.find(params[:id])
-
     render json: @airline, status: :ok
+  end
+
+  def update
+    if @airline.update(airline_params)
+      render json: @airline, status: :created
+    else
+      render json: @airline.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -22,6 +33,10 @@ class V1::AirlinesController < ApplicationController
     head(:unprocessable_entity) unless @airline.destroy
 
     head(:ok)
+  end
+
+  def set_airline
+    @airline = Airline.find(params[:id])
   end
 
   private
