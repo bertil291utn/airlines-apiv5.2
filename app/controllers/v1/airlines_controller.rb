@@ -1,5 +1,5 @@
 class V1::AirlinesController < ApplicationController
-  before_action :set_airline, only: %i[show update]
+  before_action :set_airline, only: %i[show update destroy]
 
   def index
     @airlines = Airline.all
@@ -29,7 +29,6 @@ class V1::AirlinesController < ApplicationController
   end
 
   def destroy
-    @airline = Airline.where(id: paramas[:id]).first
     head(:unprocessable_entity) unless @airline.destroy
 
     head(:ok)
