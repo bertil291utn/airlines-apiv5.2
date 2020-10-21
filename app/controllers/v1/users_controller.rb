@@ -22,6 +22,10 @@ class V1::UsersController < ApplicationController
     end
   end
 
+  def delete
+    render json: { message: 'Deleted user' }, status: :ok if @user.destroy
+  end
+
   private
 
   def set_user
