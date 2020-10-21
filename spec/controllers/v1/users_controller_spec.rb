@@ -18,4 +18,15 @@ RSpec.describe V1::UsersController, type: :controller do
     subject { post :create, params: { name: usuario.name, email: usuario.email, password: usuario.password_digest } }
     it { expect(response).to have_http_status(:success) }
   end
+
+  describe 'update a user' do
+    let(:usuario) { create :user }
+    subject { put :update, params: { name: usuario.name, email: usuario.email, password: usuario.password_digest } }
+    it { expect(response).to have_http_status(:success) }
+
+    context 'should not update because wrong email' do
+      before { put :update, params: { id: usuario.id, user: { name: usuario.name, email: 'notemail.com', password: usuario.password_digest } } }
+      it { expect(response).not_to have_http_status(:success) }
+    end
+  end
 end
