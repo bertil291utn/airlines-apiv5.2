@@ -21,7 +21,7 @@ RSpec.describe V1::UsersController, type: :controller do
 
   describe 'update a user' do
     let(:usuario) { create :user }
-    subject { put :update, params: { name: usuario.name, email: usuario.email, password: usuario.password_digest } }
+    subject { put :update, params: { name: usuario.name, email: usuario.email, password: usuario.password_digest }, headers: { Authorization: JsonWebToken.encode(user_id: user.id) } }
     it { expect(response).to have_http_status(:success) }
 
     context 'should not update because wrong email' do
@@ -32,7 +32,7 @@ RSpec.describe V1::UsersController, type: :controller do
   end
 
   describe 'delete a user' do
-    subject { delete :delete, params: { id: usuario.id } }
+    subject { delete :delete, params: { id: usuario.id }, headers: { Authorization: JsonWebToken.encode(user_id: user.id) } }
     it { expect(response).to have_http_status(:success) }
   end
 end
