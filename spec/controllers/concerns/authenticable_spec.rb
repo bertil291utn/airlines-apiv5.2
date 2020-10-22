@@ -1,5 +1,4 @@
 require 'rails_helper'
-# require_relative '../app/controllers/concerns/authenticable'
 
 class MockController
   include Authenticable
