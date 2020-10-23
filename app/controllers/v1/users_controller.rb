@@ -23,7 +23,7 @@ class V1::UsersController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     render json: { message: 'Deleted user' }, status: :ok if @user.destroy
   end
 

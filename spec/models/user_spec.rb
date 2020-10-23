@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   subject { create :user }
-  describe 'associaitions' do
+  describe 'associations' do
     it { should have_many(:reviews) }
   end
 
