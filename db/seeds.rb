@@ -2,18 +2,18 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 
-# users = User.create([
-#   {
-#     name: 'Francisco Cano',
-#     email: 'fcano@email.com',
-#     password: BCrypt::Password.create('f123456'),
-#   },
+users = User.create([
+  {
+    name: 'Francisco Cano',
+    email: 'fcano@email.com',
+    password: BCrypt::Password.create(`f123456`),
+  },
 #   {
 #     name: 'Ana M. Roura',
 #     email: 'ana@email.com',
 #     password: BCrypt::Password.create('a123456'),
 #   },
-# ])
+])
 
 # airlines = Airline.create([
 #   {
@@ -48,27 +48,27 @@ reviews = Review.create([
     description: 'I had a lovely time :heart:',
     score: 3,
     airline: Airline.find(1),
-    user: User.find(1),
+    user: User.first,
   },
   {
     title: 'Bad airline',
     description: 'I had a bad time wit this airline',
     score: 10,
     airline: Airline.find(1),
-    user: User.find(2),
+    user: User.find(3),
   },
   {
     title: 'Great airline',
     description: 'I had a lovely time :heart:',
     score: 3,
     airline: Airline.find(2),
-    user: User.find(1),
+    user: User.first,
   },
   {
     title: 'Bad airline',
     description: 'I had a bad time wit this airline',
     score: 10,
     airline: Airline.find(2),
-    user: User.find(1),
+    user: User.find(3),
   },
 ])
