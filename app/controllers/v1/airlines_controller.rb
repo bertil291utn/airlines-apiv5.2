@@ -3,26 +3,26 @@ class V1::AirlinesController < ApplicationController
 
   def index
     @airlines = Airline.all
-    render json: @airlines, status: :ok
+    render json: AirlineSerializer.new(@airlines).serializable_hash, status: :ok
   end
 
   def create
     @airline = Airline.new(airline_params)
 
     if @airline.save
-      render json: @airline, status: :created
+      render json: AirlineSerializer.new(@airlines).serializable_hash, status: :created
     else
       render json: @airline.errors, status: :unprocessable_entity
     end
   end
 
   def show
-    render json: @airline, status: :ok
+    render json: AirlineSerializer.new(@airlines).serializable_hash, status: :ok
   end
 
   def update
     if @airline.update(airline_params)
-      render json: @airline, status: :created
+      render json: AirlineSerializer.new(@airlines).serializable_hash, status: :created
     else
       render json: @airline.errors, status: :unprocessable_entity
     end
