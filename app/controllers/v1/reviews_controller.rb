@@ -1,6 +1,7 @@
 class V1::ReviewsController < ApplicationController
   before_action :set_review, only: %i[show update destroy]
   before_action :check_login, only: %i[create]
+  before_action :check_owner, only: %i[update destroy]
 
   def index
     @review = Review.all
@@ -20,6 +21,19 @@ class V1::ReviewsController < ApplicationController
     render json: @user
   end
 
+  def update
+    if @review.update(review_params)
+      render json: @review
+    else
+      render json: @review.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @review.destroy
+    head 204
+  end
+
   private
 
   def set_review
@@ -28,5 +42,9 @@ class V1::ReviewsController < ApplicationController
 
   def review_params
     params.require(:review).permit(:title, :description, :score, :airline_id)
+  end
+
+  def check_owner
+    head :forbidden unless @review.user_id == current_user&.id
   end
 end
