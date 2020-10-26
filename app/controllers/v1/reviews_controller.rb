@@ -5,25 +5,25 @@ class V1::ReviewsController < ApplicationController
 
   def index
     @review = Review.all
-    render json: @review, status: :ok
+    render json: ReviewSerializer.new(@review).serializable_hash, status: :ok
   end
 
   def create
     review = current_user.reviews.new(review_params)
     if review.save
-      render json: review, status: :created
+      render json: ReviewSerializer.new(review).serializable_hash, status: :created
     else
       render json: { errors: review.errors }, status: :unprocessable_entity
     end
   end
 
   def show
-    render json: @user
+    render json: ReviewSerializer.new(@review).serializable_hash
   end
 
   def update
     if @review.update(review_params)
-      render json: @review
+      render json: ReviewSerializer.new(@review).serializable_hash
     else
       render json: @review.errors, status: :unprocessable_entity
     end
