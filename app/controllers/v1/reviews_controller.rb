@@ -4,7 +4,7 @@ class V1::ReviewsController < ApplicationController
   before_action :check_owner, only: %i[update destroy]
 
   def index
-    @review = Review.all
+    @review = Review.includes(%i[user airline]).all
     options = { include: %i[user airline] }
     render json: ReviewSerializer.new(@review, options).serializable_hash, status: :ok
   end
