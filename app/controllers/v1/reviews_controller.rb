@@ -5,7 +5,7 @@ class V1::ReviewsController < ApplicationController
 
   def index
     @review = Review.all
-    options = { include: %i[user] }
+    options = { include: %i[user airline] }
     render json: ReviewSerializer.new(@review, options).serializable_hash, status: :ok
   end
 
@@ -19,7 +19,7 @@ class V1::ReviewsController < ApplicationController
   end
 
   def show
-    options = { include: %i[user] }
+    options = { include: %i[user airline] }
     render json: ReviewSerializer.new(@review, options).serializable_hash
   end
 
