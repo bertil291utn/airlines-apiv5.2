@@ -9,7 +9,7 @@ RSpec.describe V1::UsersController, type: :controller do
     it 'returns same email as the object email' do
       get :show, params: { id: usuario.id }, format: :json
       json_response = JSON.parse(response.body)
-      expect(json_response['email']).to match(usuario.email)
+      expect(json_response['data']['attributes']['email']).to match(usuario.email)
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe V1::UsersController, type: :controller do
   describe 'delete a user' do
     let(:usuario) { create :user }
     it 'returns a success status, with authorization token' do
-      request.headers['Authorization'] = JsonWebToken.encode(user_id: user.id)
+      request.headers['Authorization'] = JsonWebToken.encode(user_id: usuario.id)
       delete :destroy, params: { id: usuario.id }
       expect(response).to have_http_status(:success)
     end
