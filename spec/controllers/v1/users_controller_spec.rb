@@ -21,7 +21,9 @@ RSpec.describe V1::UsersController, type: :controller do
 
   describe 'update a user' do
     let(:usuario) { create :user }
-    subject { put :update, params: { name: usuario.name, email: usuario.email, password: usuario.password_digest }, headers: { Authorization: JsonWebToken.encode(user_id: usuario.id) } }
+    let(:headers) { { Authorization: JsonWebToken.encode(user_id: usuario.id) } }
+    let(:params) { { name: usuario.name, email: usuario.email, password: usuario.password_digest } }
+    subject { put :update, params: params, headers: headers }
     it { expect(response).to have_http_status(:success) }
 
     context 'should not update because wrong email' do
